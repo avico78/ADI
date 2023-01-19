@@ -18,7 +18,7 @@ class SingletonMeta(type):
 class Settings(metaclass=SingletonMeta):
     path_configuration = Path('app_config') / 'config.yaml'
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         with open(Settings.path_configuration, "r") as stream:
             try:
                 self.settings = yaml.safe_load(stream)
@@ -30,13 +30,13 @@ class Settings(metaclass=SingletonMeta):
 
 # setting = Settings()
 
-# if __name__ == "__main__":
-#     # The client code.
-#
-#     s1 = Settings()
-#     s2 = Settings()
-#     print(s1.get('databases.mongo.ENGINE'))
-#     if id(s1) == id(s2):
-#         print("Singleton works, both variables contain the same instance.")
-#     else:
-#         print("Singleton failed, variables contain different instances.")
+if __name__ == "__main__":
+    # The client code.
+
+    s1 = Settings()
+    s2 = Settings()
+    print(s1.get('databases.mongo.ENGINE'))
+    if id(s1) == id(s2):
+        print("Singleton works, both variables contain the same instance.")
+    else:
+        print("Singleton failed, variables contain different instances.")
