@@ -4,14 +4,7 @@ import os
 from pathlib import Path
 
 
-print('abspath:     ', os.path.abspath(__file__))
-print('abs dirname: ', os.path.dirname(os.path.abspath(__file__)))
 
-my_file = Path(os.path.dirname(os.path.abspath(__file__)) + "/rules/source_1.csv")
-
-print(my_file)
-if my_file.is_file():
-    print("found")
 
     # file exists
 class TaskRule:

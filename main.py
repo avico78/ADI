@@ -3,12 +3,12 @@ from app_config.db_config import DBContext
 from app_config.task import Task
 import os
 from pathlib import Path
-
-
-
+global parent_dir
+parent_dir = Path('.').absolute()
 
 def main(name):
     # Use a breakpoint in the code line below to debug your script.
+    print("m", parent_dir)
     settings = Settings()
     exit()
     source_db = DBContext().get_db(settings.get('databases.postgres'))
@@ -28,6 +28,7 @@ def main(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+
     main('PyCharm')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
