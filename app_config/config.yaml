@@ -1,8 +1,12 @@
 # backend/webserver/config/config.yml
 PROJECT_NAME: 'ADI'
-fastapi:
-  debug: true
 
+application_conig:
+  db_archive: "/db_archive"
+
+  rules:
+    folder: "/rules"
+    files: ['source_1.csv' ]
 
 databases:
 
@@ -34,7 +38,7 @@ databases:
     NAME: 'dvdrental'
     USER: 'admin'
     PASSWORD: 'admin'
-    HOST: 'postgres'
+    HOST: '192.168.1.113'
     PORT: 5432
 
   redis:

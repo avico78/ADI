@@ -29,15 +29,15 @@ class PostgresFactory(metaclass=SingletonMeta):
                                self.host,
                                self.port,
                                self.name )
-        print("Postgres",self.postgress_db_string)
+
         try:
             self.engine = create_engine(self.postgress_db_string)
-            print("Connection to the {self.host} for user {self.user} created successfully.")
+            print(f"Connection to the {self.host} for user {self.user} created successfully.")
         except Exception as error:
             print("Error: Connection not established {}".format(error))
 
       #  self.Session = sessionmaker(bind=self.engine)
-    def get(self):
+    def get_engine(self):
         return self.engine
 
 
@@ -93,40 +93,19 @@ class DBContext:
             raise ValueError(f"No factory for task type: {db_type}")
         return factory(**config)
 
-db_test = {'DB_TYPE': 'postgres', 'ENGINE': 'postgres', 'NAME': 'demo', 'USER': 'admin', 'PASSWORD': 'admin', 'HOST': 'postgres', 'PORT': 5432}
-#
-test = DBContext.get_db(db_test)
-sss = test.get()
 
-print(sss)
-exit()
-import pandas as pd
-sql = '''
-    SELECT * FROM actors;
-'''
-with sss.connect().execution_options() as conn:
-    query = conn.execute(text(sql))
-df = pd.DataFrame(query.fetchall())
-
-
+## Test
+# db_test = {'DB_TYPE': 'postgres', 'ENGINE': 'postgres', 'NAME': 'dvdrental', 'USER': 'admin', 'PASSWORD': 'admin', 'HOST': '192.168.1.113', 'PORT': 5432}
+# test = DBContext.get_db(db_test)
+# sss = test.get_engine()
 #
 # import pandas as pd
-# with test as conn:
-#      data =  pd.read_sql("select * from actor ", conn.connector)
-
-
-
-
-
-# class DbSettings(metaclass=SingletonMeta):
-#     pass
+# sql = '''
+#     SELECT * FROM actor;
+# '''
+# with sss.connect().execution_options() as conn:
+#     query = conn.execute(text(sql))
+# df = pd.DataFrame(query.fetchall())
 #
-#     def __init__(self, *args, **kwargs):
-#         self.kwargs = kwargs
-#     def testkwargs(self):
-#         return self.kwargs
-    #
-    #     self.db_session = db_session
-    #     self.query = query
-    # async def execute_query(self):
-    #     return await database.fetch_all(query=self.query)
+# print(df.head(1))
+#
