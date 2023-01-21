@@ -8,7 +8,7 @@ class SingletonMeta(type):
 
     _instances = {}
 
-    def __call__(cls, *args, **kwargs):
+    def __call__(cls, *args, **kwargs ):
         if cls not in cls._instances:
             instance = super().__call__(*args, **kwargs)
             cls._instances[cls] = instance
@@ -18,18 +18,20 @@ class SingletonMeta(type):
 class Settings(metaclass=SingletonMeta):
 
     def __init__(self, *args, **kwargs):
-        print("Here", parent_dir + 'app_config/config.yaml')
+        self.config_file = kwargs['config_file']
 
-        with open('config.yaml', "r") as stream:
+
+        with open(self.config_file, "r") as stream:
             try:
                 self.settings = yaml.safe_load(stream)
+
             except yaml.YAMLError as exc:
                 print(exc)
     def get(self, element):
         return reduce(operator.getitem, element.split('.'), self.settings)
 
 
-# setting = Settings()
+
 
 # if __name__ == "__main__":
 #     # The client code.

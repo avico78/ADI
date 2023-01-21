@@ -3,13 +3,15 @@ from app_config.db_config import DBContext
 from app_config.task import Task
 import os
 from pathlib import Path
-global parent_dir
-parent_dir = Path('.').absolute()
+config_file = Path('app_config','config.yaml')
+
+
+
+
 
 def main(name):
     # Use a breakpoint in the code line below to debug your script.
-    print("m", parent_dir)
-    settings = Settings()
+    settings = Settings(config_file=config_file)
     exit()
     source_db = DBContext().get_db(settings.get('databases.postgres'))
     rules_folder= settings.get('application_conig.rules.folder')
