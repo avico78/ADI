@@ -94,11 +94,11 @@ class DBContext:
         return factory(**config)
 
 
-## Test
-# db_test = {'DB_TYPE': 'postgres', 'ENGINE': 'postgres', 'NAME': 'dvdrental', 'USER': 'admin', 'PASSWORD': 'admin', 'HOST': '192.168.1.113', 'PORT': 5432}
-# test = DBContext.get_db(db_test)
-# sss = test.get_engine()
-#
+# Test
+db_test = {'DB_TYPE': 'postgres', 'ENGINE': 'postgres', 'NAME': 'dvdrental', 'USER': 'admin', 'PASSWORD': 'admin', 'HOST': '192.168.1.113', 'PORT': 5432}
+test = DBContext.get_db(db_test)
+sss = test.get_engine()
+print(sss)
 # import pandas as pd
 # sql = '''
 #     SELECT * FROM actor;

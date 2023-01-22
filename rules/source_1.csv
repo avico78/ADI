@@ -1,1 +1,2 @@
-DB_CONNECTION,TABLE,SQL,
+DB_CONNECTION,TABLE,SQL
+dvdrental,customer,select * from customer where customer_id=&1
