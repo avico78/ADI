@@ -19,7 +19,7 @@ pipeline {
             steps {
                 echo "Build."
                 sh '''
-                echo -e "Build"
+                echo -e "Build with new requirements "
                 '''
             } */
         }
