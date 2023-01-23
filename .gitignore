@@ -9,7 +9,7 @@ __pycache__/
 *.xml
 ./.idea
 
-
+*.pyc
 # Distribution / packaging
 .Python
 build/
