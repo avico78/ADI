@@ -3,7 +3,7 @@ setuptools==65.5.1
 wheel==0.38.4
 sqlalchemy
 SQLAlchemy-Utils
-numpy
+# numpy
 pandas
 python-decouple
 pyyaml
