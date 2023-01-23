@@ -1,35 +1,20 @@
 pipeline {
-    agent { 
-        node {
-            label 'python'
-            }
-      }
-    triggers {
-        pollSCM '*/5 * * * *'
-    }
+    agent any
+
     stages {
+        stage('Checkout') {
+            steps {
+                echo 'ADI !'
+
+                checkout scmGit(branches: [[name: '*/DevRabbit']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/avico78/ADI.git']])
+            }
+        }
         stage('Build') {
             steps {
-                echo "Building.."
-                sh '''
-                echo "doing build stuff.."
-                '''
-            }
-        }
-        stage('Test') {
-            steps {
-                echo "Testing.."
-                sh '''
-                echo "doing test stuff.."
-                '''
-            }
-        }
-        stage('Deliver') {
-            steps {
-                echo 'Deliver....'
-                sh '''
-                echo "doing delivery stuff.."
-                '''
+                git branch: 'DevRabbit', url: 'https://github.com/avico78/ADI.git'
+                pip install -r requirements.txt
+                cd app_config
+                python3 settings.py
             }
         }
     }
