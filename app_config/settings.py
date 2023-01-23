@@ -33,12 +33,12 @@ class Settings(metaclass=SingletonMeta):
 
 
 
-# if __name__ == "__main__":
-#     # The client code.
-#
-#     s1 = Settings()
-#     s2 = Settings()
-#     print(s1.get('databases.mongo.ENGINE'))
+if __name__ == "__main__":
+    # The client code.
+    config_file = Path('.', 'config.yaml')
+    s1 = Settings(config_file=config_file)
+
+    print(s1.get('databases.mongo.ENGINE'))
 #     if id(s1) == id(s2):
 #         print("Singleton works, both variables contain the same instance.")
 #     else:
