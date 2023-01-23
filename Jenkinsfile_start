@@ -8,20 +8,20 @@ pipeline {
         pollSCM '*/5 * * * *'
     }
     stages {
-        stage('Prerequisites') {
+        stage('Build') {
             steps {
                 echo "installing requirements"
                 sh '''
                 pip install -r requirements.txt
                 '''
             }
-        stage('Build') {
+    /*  stage('Build') {
             steps {
                 echo "Build."
                 sh '''
                 echo -e "Build"
                 '''
-            }
+            } */
         }
         stage('Test') {
             steps {
