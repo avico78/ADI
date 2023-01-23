@@ -32,7 +32,6 @@ class Settings(metaclass=SingletonMeta):
 
 
 
-
 # if __name__ == "__main__":
 #     # The client code.
 #
