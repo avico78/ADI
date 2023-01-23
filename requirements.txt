@@ -4,7 +4,7 @@ wheel==0.38.4
 sqlalchemy
 SQLAlchemy-Utils
 # numpy
-pandas
+# pandas
 python-decouple
 pyyaml
 psycopg2
