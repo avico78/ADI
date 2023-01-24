@@ -1,38 +1,38 @@
 pipeline {
-    agent none
+
     environment {
+        DOCKERHUB_CREDENTIALS = credentials('avicoiot-dockerhub')
         PRODUCT = 'ADI'
         GIT_HOST = 'somewhere'
         GIT_REPO = 'repo'
     }
+    agent { label 'linux'}
 
     options {
         ansiColor('xterm')
         skipDefaultCheckout()
-        buildDiscarder(logRotator(numToKeepStr: '10'))
+        buildDiscarder(logRotator(numToKeepStr: '3'))
     }
     stages {
-        stage('Checkout') {
-
-             steps {
-                checkout scmGit(branches: [[name: '*/DevRabbit']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/avico78/ADI.git']])
-            }
+        stage('Build') {
             steps {
-                echo 'ADI !'
-                checkout scmGit(branches: [[name: '*/DevRabbit']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/avico78/ADI.git']])
+                sh 'docker build -t avicoiot/adi-alpine:latest .'
+                }
+            }
+        stage('Login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -i $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                }
+            }
+        stage('Push') {
+            steps {
+                sh 'docker push avicoiot/adi-alpine:latest'
+                }
             }
         }
-        stage('Build') {
-            agent {
-                docker {
-                     image 'python:alpine'
-            }
-            steps {
-                git branch: 'DevRabbit', url: 'https://github.com/avico78/ADI.git'
-                pip install -r requirements.txt
-                cd app_config
-                python3 settings.py
-            }
+        post {
+        always {
+        sh 'docker logout'
         }
     }
 }
