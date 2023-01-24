@@ -1,10 +1,11 @@
-pip==22.3.1
-setuptools==65.5.1
-wheel==0.38.4
+pip
+setuptools
+wheel
 sqlalchemy
 SQLAlchemy-Utils
-# numpy
-# pandas
+numpy
+pandas
 python-decouple
 pyyaml
-# psycopg2
+psycopg2
+celley
