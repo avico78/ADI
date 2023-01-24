@@ -6,7 +6,7 @@ pipeline {
         GIT_HOST = 'somewhere'
         GIT_REPO = 'repo'
     }
-    agent { label 'linux'}
+    agent any
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '3'))
