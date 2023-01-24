@@ -1,4 +1,3 @@
-from app_config.settings import SingletonMeta
 from abc import ABC, abstractmethod
 from typing import Dict
 from enum import Enum

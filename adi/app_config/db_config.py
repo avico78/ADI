@@ -1,11 +1,9 @@
-from app_config.settings import SingletonMeta
+from adi.app_config.settings import SingletonMeta
 from typing import Dict
 from enum import Enum
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy_utils import database_exists, create_database
-from sqlalchemy.sql import text
+
 
 class DBType(str, Enum):
     POSTGRES = "postgres"

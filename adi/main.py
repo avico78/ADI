@@ -1,9 +1,7 @@
-from app_config.settings import Settings
-from app_config.db_config import DBContext
-from app_config.task import Task
-import os
+from adi.app_config.settings import Settings
+from adi.app_config.db_config import DBContext
 from pathlib import Path
-config_file = Path('app_config','config.yaml')
+config_file = Path('app_config', 'config.yaml')
 
 rules = 'application_conig.rules.'
 

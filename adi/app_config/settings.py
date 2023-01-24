@@ -35,7 +35,7 @@ class Settings(metaclass=SingletonMeta):
 
 if __name__ == "__main__":
     # The client code.
-    config_file = Path('.', 'config.yaml')
+    config_file = Path('', 'config.yaml')
     s1 = Settings(config_file=config_file)
 
     print(s1.get('databases.mongo.ENGINE'))
