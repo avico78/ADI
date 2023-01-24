@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 config_file = Path('app_config','config.yaml')
 
+
+
 rules = 'application_conig.rules.'
 
 
