@@ -7,5 +7,6 @@ numpy
 pandas
 python-decouple
 pyyaml
-psycopg2
+psycopg2-binary
+
 celery

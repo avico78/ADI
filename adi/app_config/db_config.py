@@ -1,4 +1,4 @@
-from adi.app_config.settings import SingletonMeta
+from app_config.settings import SingletonMeta
 from typing import Dict
 from enum import Enum
 

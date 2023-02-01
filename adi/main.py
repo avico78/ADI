@@ -1,10 +1,11 @@
-from adi.app_config.settings import Settings
-from adi.app_config.db_config import DBContext
+from app_config.settings import Settings
+from app_config.db_config import DBContext
 from pathlib import Path
+from loadCsv.tasks import load_csv
+from celery import group
 config_file = Path('app_config', 'config.yaml')
 
 rules = 'application_conig.rules.'
-
 
 
 def main(name):
@@ -12,6 +13,9 @@ def main(name):
     settings = Settings(config_file=config_file)
     customers_list = settings.get(f'{rules}customers_list')
     print(customers_list)
+    res = load_csv.delay("Hi")
+    print(res)
+
     exit()
     source_db = DBContext().get_db(settings.get('databases.postgres'))
     rules_folder= settings.get(f'{rules}folder')
