@@ -3,6 +3,9 @@ from functools import reduce
 import operator
 from pathlib import Path
 
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
 
 class SingletonMeta(type):
 
@@ -31,14 +34,18 @@ class Settings(metaclass=SingletonMeta):
         return reduce(operator.getitem, element.split('.'), self.settings)
 
 
+## adding sys.path.append(str(Path(__file__).parent.parent)) - will include the parent dir so can work directly
+# or from main
 
+# s1 = Settings(config_file='config.yaml')
+# print(s1.get('databases.mongo.ENGINE'))
 
-if __name__ == "__main__":
-    # The client code.
-    config_file = Path('.', 'config.yaml')
-    s1 = Settings(config_file=config_file)
+# if __name__ == "__main__":
+#     # The client code.
+#     config_file = Path('.', 'config.yaml')
+#     s1 = Settings(config_file=config_file)
 
-    print(s1.get('databases.mongo.ENGINE'))
+    # print(s1.get('databases.mongo.ENGINE'))
 #     if id(s1) == id(s2):
 #         print("Singleton works, both variables contain the same instance.")
 #     else:

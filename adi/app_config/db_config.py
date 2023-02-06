@@ -1,6 +1,10 @@
 from app_config.settings import SingletonMeta
 from typing import Dict
 from enum import Enum
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
+
 from sqlalchemy import create_engine
 
 class DBType(str, Enum):
