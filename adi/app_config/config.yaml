@@ -5,8 +5,8 @@ application_conig:
   db_archive: "/db_archive"
 
   rules:
-    folder: "/rules"
-    files: ['source_1.csv' ]
+    folder: "/csv_files"
+    files: ['source1.csv' ]
     customers_list: [1,2,3,4,5,6,7]
 
 

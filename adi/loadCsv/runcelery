@@ -1,0 +1,4 @@
+
+
+watchmedo auto-restart --directory=./loadCsv --pattern=*.py --recursive -- celery -A loadCsv.worker worker -l INFO
+

@@ -1,9 +1,7 @@
 from app_config.settings import SingletonMeta
 from typing import Dict
 from enum import Enum
-
 from sqlalchemy import create_engine
-
 
 class DBType(str, Enum):
     POSTGRES = "postgres"

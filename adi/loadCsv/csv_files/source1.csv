@@ -1,0 +1,3 @@
+db_connection_source,sql,target_type,db_connection_target
+source_ps,SELECT * FROM customer where customer=&1 ,df , file 
+source_ps,SELECT * FROM rental where customer=&1 ,df , file 
