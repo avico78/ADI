@@ -1,11 +1,11 @@
 from app_config.settings import Settings
 from app_config.db_config import DBContext
 from pathlib import Path
-from loadCsv.tasks import CustomerTable,AddTask,load_csv
+
 from loadCsv.client import LoadConfig
 from loadCsv.tasks_2 import test_load
 config_file = Path('app_config', 'config.yaml')
-
+# settings = Settings(config_file=config_file)
 rules = 'application_conig.rules.'
 
 
@@ -17,11 +17,14 @@ def main(name):
     files = settings.get(f'{rules}files')
     folder_path = settings.get(f'{rules}folder')
     source_db = DBContext().get_db(settings.get('databases.postgres'))
-    print(source_db)
-    exit()
-    # a = LoadConfig(setting=settings, files=files, customers_list=customers_list, path=folder_path))
-    res = AddTask().delay(1,2)
-    print(res.get())
+
+    a = LoadConfig(settings=settings)
+
+    a.initialize_operation()
+    print(a)
+    a.run()
+    #res = AddTask().delay(1,2)
+   # print(res.get())
     # LoadCsv(setting=settings)
     # a = CustomerTable().delay(a="aaaaaaaaa")
     # print(a.get())

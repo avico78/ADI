@@ -8,5 +8,5 @@ pandas
 python-decouple
 pyyaml
 psycopg2-binary
-
 celery
+watchdog

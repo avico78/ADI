@@ -1,0 +1,6 @@
+watchmedo auto-restart --directory=./loadCsv --pattern=*.py --recursive -- celery -A loadCsv.worker worker --hostname=worker.main@%h --pool=gevent --concurrency=10 --queues=main -l INFO
+
+watchmedo auto-restart --directory=./loadCsv --pattern=*.py --recursive -- celery -A loadCsv.worker worker --hostname=worker.db@%h --pool=gevent --concurrency=10 --queues=db -l INFO
+
+
+watchmedo auto-restart --directory=./celery_app --pattern=*.py --recursive -- celery -A celery_app.worker worker --hostname=worker.db@%h --pool=gevent --concurrency=10 --queues=db -l INFO

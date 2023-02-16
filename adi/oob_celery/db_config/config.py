@@ -8,14 +8,14 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from sqlalchemy import create_engine
 
-from app_config.settings import SingletonMeta
+
 class DBType(str, Enum):
     POSTGRES = "postgres"
     SQLITE = "sqlite"
 
 
 
-class PostgresFactory(metaclass=SingletonMeta):
+class PostgresFactory():
     def __init__(self, *args, **kwargs):
 
         self.db_type = kwargs['DB_TYPE']
@@ -68,7 +68,7 @@ class PostgresFactory(metaclass=SingletonMeta):
         print("get DB", self.port)
 
 
-class SqlLiteFactory(metaclass=SingletonMeta):
+class SqlLiteFactory():
     def __init__(self, *args, **kwargs):
         self.kwargs = kwargs
     @staticmethod

@@ -1,16 +1,9 @@
 
 import csv
 import sys
-from pathlib import Path
-sys.path.append(str(Path(__file__).parent.parent))
 import json
 
 
-from celery import group
-
-
-from app_config.db_config import DBContext
-from app_config.settings import settings
 
 # from loadCsv.load_manager import LoadManager
 
@@ -18,13 +11,13 @@ rules = 'application_conig.rules.'
 
 class LoadConfig:
 
-    def __init__(self , settings, Thread=2 ) -> None:
+    def __init__(self , settings) :
         
         self.settings = settings
         self.customers_list = self.settings.get(f'{rules}customers_list')
         self.files = self.settings.get(f'{rules}files')[0]
         self.files_path = self.settings.get(f'{rules}folder')  
-        self.mapping_rule_file = 'loadCsv' + self.files_path + '/' + self.files
+        self.mapping_rule_file = self.files_path + '/' + self.files
         self.load_config:dict = {}
         self.operation = None
 
@@ -81,16 +74,21 @@ class LoadConfig:
 
     @staticmethod
     def _convertcsv2dict(file_path):
-
+        """ Function will conevert the csv to dict format where each column in csv would be key in the dict
+            In exampe table_name,connection would be { 'table_name': <param>, 'connection': <parama> }"""
+            
         content = []
+        rule_id = 1
         with open(file_path) as csvfile:
             csv_reader = csv.reader(csvfile)
             headers = next(csv_reader)
             for row in csv_reader:
                 row_data = {key: value for key, value in zip(headers, row)}
                 updated_row = {}
-                updated_row.update({'key':'' , 'rules':row_data})
+                updated_row.update({'rule_id': rule_id, 'rules':row_data})
                 content.append(updated_row)  
+                rule_id += 1
+                
         sorted_mapping_rules = sorted(content, key=lambda d: d['rules']['order']) 
                    
         return sorted_mapping_rules
@@ -103,7 +101,6 @@ class LoadConfig:
         # res = load_csv.delay(files)
         # print(res.get())
 
-load_config = LoadConfig(settings=settings)
 
 # load_config.initialize_operation()
 

@@ -8,6 +8,8 @@ def is_celery_working():
     result = app.control.broadcast('ping', reply=True, limit=1)
     return bool(result)  # True if at least one result
 
+
+
 def get_celery_worker_status():
     i = app.control.inspect()
     availability = i.ping()
@@ -24,8 +26,8 @@ def get_celery_worker_status():
     }
     return result
 
-print(is_celery_working())
-print(get_celery_worker_status())
+# print(is_celery_working())
+# print(get_celery_worker_status())
 
 
 

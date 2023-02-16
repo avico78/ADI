@@ -3,3 +3,5 @@ db,postgres,source_ps,SELECT * FROM customer1 where customer=&1 ,df , file ,1
 db,postgres,source_ps,SELECT * FROM rental1 where customer=&1 ,df , file ,1
 db,postgres,source_ps,SELECT * FROM customer2 where customer=&1 ,df , file ,3
 db,postgres,source_ps,SELECT * FROM rental2 where customer=&1 ,df , file ,3
+db,target,source_ps,SELECT * FROM customer2 where customer=&1 ,df , file ,3
+db,target,source_ps,SELECT * FROM rental2 where customer=&1 ,df , file ,3

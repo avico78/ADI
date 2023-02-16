@@ -1,0 +1,7 @@
+rule_id,source_type,source_name,sql,target_type,target_name,order
+1,db,postgres,SELECT * FROM customer1 where customer=&1,db ,target ,1
+2,db,postgres,SELECT * FROM rental1 where customer=&1 ,db ,target,1
+3,db,postgres,SELECT * FROM customer2 where customer=&1 ,db ,target,3
+4,db,postgres,SELECT * FROM rental2 where customer=&1 , db,target,3
+5,db,target,SELECT * FROM customer2 where customer=&1 ,db ,target,3
+6,db,target,SELECT * FROM rental2 where customer=&1 ,db ,target,3

@@ -1,0 +1,7 @@
+source_type,source_name,db_connection_name,sql,target_name,target_type,db_connection_target,order
+db,postgres,source_ps,SELECT * FROM customer1 where customer=&1,customer ,df , file ,1
+db,postgres,source_ps,SELECT * FROM rental1 where customer=&1 ,d,rental , file ,1
+db,postgres,source_ps,SELECT * FROM customer2 where customer=&1 ,df, , file ,3
+db,postgres,source_ps,SELECT * FROM rental2 where customer=&1 ,df, , file ,3
+db,target,source_ps,SELECT * FROM customer2 where customer=&1 ,df, , file ,3
+db,target,source_ps,SELECT * FROM rental2 where customer=&1 ,df, , file ,3

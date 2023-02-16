@@ -1,16 +1,7 @@
 import yaml
 from functools import reduce
 import operator
-from pathlib import Path
 
-import sys
-from pathlib import Path
-sys.path.append(str(Path(__file__).parent.parent))
-
-
-
-config_file = Path('app_config', 'config.yaml')
-rules = 'application_conig.rules.'
 
 
 class SingletonMeta(type):
@@ -41,7 +32,6 @@ class Settings(metaclass=SingletonMeta):
         return reduce(operator.getitem, element.split('.'), self.settings)
 
 
-settings = Settings(config_file=config_file)
 
 
 

@@ -2,16 +2,17 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 from celery import Celery
-import loadCsv.celeryconfig as celeryconfig
+import celery_app.celeryconfig as celeryconfig
 
-app = Celery('proj')
+app = Celery('adi')
 
 app.config_from_object(celeryconfig)
 
+
 # Optional configuration, see the application user guide.
-app.conf.update(
-    result_expires=3600,
-)
+# app.conf.update(
+#     result_expires=3600,
+# )
 
 
 
