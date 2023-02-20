@@ -8,14 +8,20 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from celery import group,Task
 from celery_app.worker import app
+from celery.utils.log import get_task_logger      
 from db_config.config import DBContext
+
+
+
+
+from celery_app.celery_param_base import CeleryParams  
+
+
+logger = get_task_logger(__name__)
+
 
 with open('celery_app/config_load.py') as f:
     db_connections = json.load(f)
-  
-
-
-logger = logging.getLogger(__name__)
 
 
 # db_connections = {'postgres': {'connection_details': {'DB_TYPE': 'postgres', 'ENGINE': 'postgres', 'NAME': 'dvdrental', 'USER': 'admin', 'PASSWORD': 'admin', 'HOST': '192.168.1.113', 'PORT': 5432}, 'engine': ''}, 'target': {'connection_details': {'DB_TYPE': 'postgres', 'ENGINE': 'postgres', 'NAME': 'target', 'USER': 'admin', 'PASSWORD': 'admin', 'HOST': '192.168.1.113', 'PORT': 5432}, 'engine': ''}}
@@ -73,11 +79,20 @@ class DatabaseTask(Test,Task):
 
 
 
+
+@app.task(bind=True, base=DatabaseTask, name='init_db_connections2')
+def init_db_connections2(self, **kwargs):
+    print("sel" ,self.db['postgres'])
+
+    return "ok"
+
+
 @app.task(bind=True, base=DatabaseTask, name='init_db_connections')
-def init_db_connections(self):
+def init_db_connections(self, **kwargs):
 
     import celery_app.utils as utl
-    utl.init_config(base=self)
+    utl.init_config(base=self,**kwargs)
+    logger.info('InitDB Completed ')    
     return "init completed"
 
 
@@ -96,19 +111,29 @@ def proccess_rule(self, *args, **kwargs):
     main_id = kwargs.get('main_id')
     source_type = kwargs.get('source_type')
     source_name = kwargs.get('source_name')
+    source_object_name = kwargs.get('source_object_name')
     sql = kwargs.get('sql')
     target_name = kwargs.get('target_name')
+    target_object_name = kwargs.get('target_object_name')
     target_type = kwargs.get('target_type')
     order = kwargs.get('order')
 
-    if (rule_id % 2) == 0:
-        load_operation.load_table(base=self)
 
-    # if source_type == 'db':
-    #     init_config(base=self ,init_db=source_name)
-    #     # utl.df_to_table(base=self ,**kwargs)
+    df_source = None
+    db_connection = None
+    print("type db!!!!!!!" , target_type)
+    if source_type == 'db':
+        db_connection = self.db[source_name]
+        df = load_operation.load_table_from_db(conn=db_connection, sql=sql)
+        print("source",db_connection)
+    if target_type.strip() == 'db':
+        print("Back from Load!!!!!!", df_source)
+        db_connection = self.db[target_name]       
+        print("source",db_connection)
+        load_operation.df_to_table(conn=db_connection, table_name=target_object_name ,df=df ,if_exists='append')
 
-    time.sleep(random.randint(0,7))
+
+    #time.sleep(random.randint(0,7))
     return 1
 
 
@@ -144,13 +169,13 @@ def proccess_rule(self, *args, **kwargs):
 
 
 
+# init_db_connections2.delay()
+
 
 
 # @app.task(bind=True , name='read_input_csv')
 # def proccess_rules(self,customers, mapping_rules):
 #     return group([load_data.delay(customer, mapping_rules) for customer in customers])
-
-
 
 
 
