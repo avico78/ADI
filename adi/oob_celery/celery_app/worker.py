@@ -1,7 +1,10 @@
+import logging
+import os
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 from celery import Celery
+from celery.signals import after_setup_logger
 import celery_app.celeryconfig as celeryconfig
 
 app = Celery('adi')
@@ -21,12 +24,18 @@ try:
 except Exception as ex:
     raise RuntimeError("Failed to connect to celery broker, {}".format(str(ex)))
 
-##avi@desktop-hili:~/Dev/adi/ADI/adi$ watchmedo auto-restart --directory=./loadCsv --pattern=*.py --recursive -- celery -A loadCsv.worker worker -l INFO
-
-# app.autodiscover_tasks([
-#    'loadCsv'
-# ] ,force=True)
 
 
-# if __name__ == '__main__':
-#     app.start()
+for f in ['celery_app/broker/out', 'celery_app/broker/processed']:
+    if not os.path.exists(f):
+        os.makedirs(f)
+
+@after_setup_logger.connect
+def setup_loggers(logger, *args, **kwargs):
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    # add filehandler
+    fh = logging.FileHandler('celery_app/celery.log')
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)

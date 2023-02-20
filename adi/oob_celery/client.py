@@ -6,12 +6,13 @@ from pathlib import Path
 
 from loader_config import LoadConfig
 from customer import Customer
+from celery_app.celery_param_base import CeleryParams
+
+
 
 import asyncio
 
 config_file = Path('app_config', 'config.yaml')
-
-
 
 
 
@@ -33,13 +34,26 @@ config.initialize_operation()
 
 rules = config.load_config['csvdict']
 
+# print(json.dumps(rules))
+
+# exit()
+
 #required db connections
 db_connections = config.load_config['db_connections']
 
+# test = {}
 
-f = open('celery_app/config_load.py','w')
-f.write(json.dumps(db_connections))
-f.close()
+# for db_name,db_details in db_connections.items():
+#     # print("Init with",db_name, db_details['connection_details'])
+#     test[db_name] = db_details
+
+# print("here " , test)
+
+# exit()
+
+# f = open('celery_app/config_load.py','w')
+# f.write(json.dumps(db_connections))
+# f.close()
 
 # print(json.dumps(rules[0]))
 
@@ -51,18 +65,40 @@ f.close()
 # time.sleep(11)
 
 
-customers = [111,222,333]
+async def exec_id(id):
+    cust = Customer(id=id)    
+    cust.load_tasks(configs=rules ,db_connections=db_connections)
+    await cust.run()
+
+    for task in cust.executed_tasks:
+        print(task.task_run.get())
 
 
 async def main():
-    for customer in customers:
+    run_id = 'dev_run'
+    ids = [1,2,3,4,5]
+    celery_param_init = CeleryParams()
 
-        cust = Customer(id=customer)    
-        cust.load_tasks(configs=rules ,db_connections=db_connections)
-        asyncio.run(cust.run())
-        for task in cust.executed_tasks:
-            print(task.task_run.state)
-        print(cust.state)
+    # celery_param_init.run(db_connections=db_connections)
+   # a = db_base.delay(config="aaaaaaai")
+    #
+    # from celery_app.tasks_2 import init_db_connections,init_db_connections2
+
+    # b = init_db_connections.delay(init_db='any')
+    # print(b.get())
+
+    for id in ids:
+        await exec_id(id)
+
+
+# cust = Customer(id=1)    
+# cust.load_tasks(configs=rules ,db_connections=db_connections)
+# asyncio.run(cust.run())
+# for task in cust.executed_tasks:
+#     print(task.task_run.state)
+
+# if __name__ == "__main__":
+#     main()
         
 asyncio.run(main())
 

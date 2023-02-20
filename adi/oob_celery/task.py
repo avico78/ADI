@@ -10,21 +10,24 @@ class Task:
         self.rule_id =  config.get('rule_id')
         self.source_type = config['rules'].get('source_type')
         self.source_name = config['rules'].get('source_name')
+        self.source_object_name = config['rules'].get('source_object_name')
         self.sql =  config['rules'].get('sql')
         self.sql_render = None        
         self.target_type =  config['rules'].get('target_type')
+        self.target_object_name = config['rules'].get('target_object_name')
         self.target_name=  config['rules'].get('target_name')
         self.order =  config['rules'].get('order')
         self.state = State.SCHEDULED
         self.result = None
         self.task_run = None
         self.task_celery_id = None
+
     def initialize_task(self):
-        self.sql_render = self.sql.replace("&1",str(self.customer.id))        
+        self.sql_render = self.sql.replace("&1",str(self.customer.id)).rstrip('\r\n')        
         
     def run(self):
-        self.task_run = proccess_rule.delay(rule_id=self.rule_id, main_id=self.customer.id,source_type=self.source_type,source_name=self.source_name,sql=self.sql_render,
-                                               target_type=self.target_type,target_name=self.target_name,   order=self.order)
+        self.task_run = proccess_rule.delay(rule_id=self.rule_id, main_id=self.customer.id,source_type=self.source_type,source_name=self.source_name,source_object_name=self.source_object_name,sql=self.sql_render,
+                                               target_type=self.target_type,target_object_name=self.target_object_name,target_name=self.target_name,   order=self.order)
         self.task_celery_id = self.task_run.task_id
 
         self._update_customer()
