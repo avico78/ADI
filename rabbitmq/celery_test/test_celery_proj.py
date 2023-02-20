@@ -1,19 +1,31 @@
-from proj.tasks import add
-from celery import group
+from proj.tasks import add,pi_calc
+from celery import group,signature
+from time import sleep
 
 
-# s1 = add.signature((2, 2), countdown=2)
-# res = s1.delay()
-#
-# print(res.get())
+def mylink(num):
+    return num+100
+
+
+
+
+# res= pi_calc.delay()
+# print(res.status)
+# sleep(5)
+# print(res.status,res.get())
+
+
 # print(add(21,34))
-#
-for i in range(10):
-    print(add.apply_async((i, 2), queue='ZZ1Z'))
+
+for i in range(5):
+    print(add.apply_async((i, -9)))
 
 #
 # g = group(add.s(i,2) for i in range(10))
 # print(g(10).get())
+
+# print(celery.chain(add.delay(1,3),
+#                     mylink(2)).appl_async())
 
 #
 # g = group(add.s(i, i) for i in range(10))().get()
