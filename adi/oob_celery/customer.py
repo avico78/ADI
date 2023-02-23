@@ -1,3 +1,5 @@
+
+
 from typing import Dict, List, Optional
 from states import State
 from task import Task
@@ -19,10 +21,7 @@ class Customer:
         self.state = State.SCHEDULED
 
 
-    # async def print_lines(self):
-    #     for i in range(1, 11):
-    #         await asyncio.sleep(0.5)
-    #         print(f'Line {i}')    
+
 
     def load_tasks(self , configs: List[Dict] ,db_connections:Dict):
 

@@ -14,7 +14,7 @@ def df_to_table(conn=None, df=None ,table_name=None ,if_exists='append'):
     try: 
         number_of_row = df.to_sql(table_name, conn, if_exists= if_exists)
        # print("!!!!!!!!!!result",res)
-        conn.commit()
+       # conn.commit()
         return number_of_row
     except (ProgrammingError, OperationalError) as e:
         print('Error occured while executing a query {}'.format(e.args))

@@ -4,16 +4,18 @@ import json
 import sys
 from pathlib import Path
 
+from app_monitor.app_db import metadata,database,app_engine
+from app_monitor.models import AdiAllRun,AdiCustomer,AdiRule
+
 from loader_config import LoadConfig
 from customer import Customer
 from celery_app.celery_param_base import CeleryParams
 
-
+import sqlalchemy
 
 import asyncio
 
 config_file = Path('app_config', 'config.yaml')
-
 
 
 """ setting class holds all required parameters deails as db details , customer list , files path,
@@ -34,12 +36,20 @@ config.initialize_operation()
 
 rules = config.load_config['csvdict']
 
-# print(json.dumps(rules))
-
-# exit()
 
 #required db connections
 db_connections = config.load_config['db_connections']
+
+
+# app db 
+
+
+# just to be sure we clear the db before
+metadata.drop_all(bind=app_engine)
+# metadata.create_all(app_engine)
+
+print("here")
+exit()
 
 # test = {}
 

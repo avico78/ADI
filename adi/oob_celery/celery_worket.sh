@@ -1,0 +1,1 @@
+watchmedo auto-restart --directory=./celery_app --pattern=*.py  --ignore-patterns="*config*" --recursive -- celery -A celery_app.worker worker --hostname=worker.db@%h --pool=gevent --concurrency=10 --queues=db -l INFO

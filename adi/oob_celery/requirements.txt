@@ -1,0 +1,14 @@
+pip
+setuptools
+wheel
+sqlalchemy
+SQLAlchemy-Utils
+numpy
+pandas
+python-decouple
+pyyaml
+psycopg2-binary
+celery
+gevent
+watchdog
+ormar

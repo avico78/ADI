@@ -1,5 +1,5 @@
 rule_id,source_type,source_name,source_object_name,sql,target_type,target_name,target_object_name,order
-1,db,postgres,customer ,SELECT * FROM customer where customer_id=&1,db ,target,customer ,1
+1,db,postgres,customer ,SELECT * FROM customer where customer_id=&1,db ,target,customer,1
 2,db,postgres,customer_data,SELECT * FROM customer_data where customer_id=&1 ,db ,target,customer_data,1
 3,db,postgres,customer_binary,SELECT * FROM customer_binary where customer_id=&1 ,db ,target,customer_binary,3
 4,db,postgres,payment,select * from payment where customer_id in (select customer_id from customer where customer_id=&1) , db,target,payment,3
